@@ -1,5 +1,5 @@
 # UJNLib
-UJN图书馆座位自动预约系统
+UJN图书馆座位自动预约
 
 # 语言
 python
