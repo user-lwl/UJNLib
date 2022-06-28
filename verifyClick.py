@@ -102,23 +102,49 @@ class SeatVerification(object):
         try:
             new_image = self.getImageShear()
             click_coordinates = self.uploadPicture(new_image)
-            if len(click_coordinates) >= 2:
+            if len(click_coordinates) == 1:
+                xoffset = int(click_coordinates[0][0])
+                yoffset = int(click_coordinates[0][1])
+            elif len(click_coordinates) == 2:
                 xoffset = int(click_coordinates[0][0])
                 yoffset = int(click_coordinates[0][1])
                 xoffset2 = int(click_coordinates[1][0])
                 yoffset2 = int(click_coordinates[1][1])
+            elif len(click_coordinates) == 3:
+                xoffset = int(click_coordinates[0][0])
+                yoffset = int(click_coordinates[0][1])
+                xoffset2 = int(click_coordinates[1][0])
+                yoffset2 = int(click_coordinates[1][1])
+                xoffset3 = int(click_coordinates[2][0])
+                yoffset3 = int(click_coordinates[2][1])
             else:
                 return {'status': 0, 'msg': '继续点选验证'}
             logger.info('在 layui-layer1 元素下，点击坐标：{}, {}'.format(xoffset, yoffset))
 
-            ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset, yoffset).perform()
-            #time.sleep(1)
-            ActionChains(self.driver).click().perform()
-            time.sleep(random.uniform(1,3))
-            ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset2, yoffset2).perform()
-            #time.sleep(1)
-            ActionChains(self.driver).click().perform()
-            #time.sleep(5)
+            if len(click_coordinates) == 1:
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset, yoffset).perform()
+                # time.sleep(1)
+                ActionChains(self.driver).click().perform()
+            elif len(click_coordinates) == 2:
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset, yoffset).perform()
+                #time.sleep(1)
+                ActionChains(self.driver).click().perform()
+                time.sleep(random.uniform(0.1, 0.3))
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset2, yoffset2).perform()
+                #time.sleep(1)
+                ActionChains(self.driver).click().perform()
+            elif len(click_coordinates) == 3:
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset, yoffset).perform()
+                #time.sleep(1)
+                ActionChains(self.driver).click().perform()
+                time.sleep(random.uniform(0.1, 0.3))
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset2, yoffset2).perform()
+                #time.sleep(1)
+                ActionChains(self.driver).click().perform()
+                time.sleep(random.uniform(0.1, 0.3))
+                ActionChains(self.driver).move_to_element_with_offset(self.ele_iframe, xoffset3, yoffset3).perform()
+                # time.sleep(1)
+                ActionChains(self.driver).click().perform()
 
             #is_exsit = self.checkElementExists(self.driver, 'layui-layer1', 'id')
             #if is_exsit:
