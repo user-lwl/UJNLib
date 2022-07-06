@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 from logger_seat import logger
 from threading import Thread
-from config import ACCOUNTS, send_wechat, USER_AGENTS
+from config import ACCOUNTS, USER_AGENTS
 from verifyClick import SeatVerification
 
 from selenium import webdriver
@@ -452,9 +452,7 @@ class GrabNumber(Thread):
                 wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'seatTime')))
 
                 if self.browser.page_source.find('系统已经为您预定好了') > 0:
-                    # alert_sound() # 语音提醒
                     logger.info('{}，{} {}，{} {}-{}，预约成功'.format(wechat['name'], room[1], seat[1], self.date_appointment, self.start_time, self.end_time))
-                    send_wechat('预约成功，校园图书馆座位', wechat['name'], self.date_appointment + ' ' + self.start_time + '-' + self.end_time, room[1] + ' ' + seat[1])
                     return True
                 else:
                     logger.info('{}，{} {}，{} {}-{}，预约失败'.format(wechat['name'], room[1], seat[1], self.date_appointment, self.start_time, self.end_time))
